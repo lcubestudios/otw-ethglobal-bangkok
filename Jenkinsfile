@@ -24,7 +24,7 @@ pipeline {
             steps {
                 echo "Installing dependencies on ${NODE_NAME}."
                 slackSend color: "warning", message: "Installing dependencies for ${REPO_NAME} from ${BRANCH_NAME} branch..."
-                sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME} && ${PACKAGE_MANAGER} install'
+                sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/ && ${PACKAGE_MANAGER} install'
             }
         }
 
@@ -32,15 +32,15 @@ pipeline {
             steps {
                 echo "Building the application on ${NODE_NAME}."
                 slackSend color: "warning", message: "Starting build process for ${REPO_NAME} from ${BRANCH_NAME} branch..."
-                sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME} && ${BUILD_COMMAND}'
+                sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/ && ${BUILD_COMMAND}'
             }
         }
 
         stage("Start Next.js Server") {
             steps {
                 echo "Starting the Next.js server with local PM2."
-                sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME} && npx pm2 stop ${REPO_NAME} || true'
-                sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME} && npx pm2 start npm --name ${REPO_NAME} -- run start'
+                sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/ && npx pm2 stop ${REPO_NAME} || true'
+                sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/ && npx pm2 start npm --name ${REPO_NAME} -- run start'
             }
         }
     }
