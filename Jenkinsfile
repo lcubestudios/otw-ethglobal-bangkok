@@ -73,7 +73,7 @@ pipeline {
                     [ -s "\$NVM_DIR/nvm.sh" ] && . "\$NVM_DIR/nvm.sh"
                     cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/
                     pm2 stop ${REPO_NAME} || true
-                    pm2 start npm --name ${REPO_NAME} -- run start
+                    pm2 start ecosystem.config.js
                     pm2 save
                 """
                 slackSend color: "good", message: "Next.js server started successfully with PM2 for ${REPO_NAME}."
