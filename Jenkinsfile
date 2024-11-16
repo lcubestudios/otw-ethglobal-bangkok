@@ -8,8 +8,8 @@ pipeline {
         BUILD_COMMAND = 'npm run build'
         
         // Environment Variables
-        REACT_APP_BACKEND_URL = 'http://localhost:3000'
-        REACT_APP_PRIVY_APP_ID = 'cm3juc4bo00mz28ul3iduqvf1'
+        NEXT_PUBLIC_PRIVY_APP_ID=cm3juc4bo00mz28ul3iduqvf1
+        PRIVY_APP_SECRET=3nBoKmDYJWz8ya2q9eBTABjzx6ofjyeDBc1pdF9zVfY22syc5EghoCGsTMFLJoebKU2cfjGjnzuV7csshMNiGLAS
         
         // Apache Configuration
         APACHE_DIR = '/var/www/html'
