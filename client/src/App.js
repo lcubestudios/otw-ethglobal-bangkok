@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import axios from "axios";
+import { loginUser } from "./privy";
 
-function App() {
+const App = () => {
+  const [user, setUser] = useState(null);
+
+  const handleLogin = async () => {
+    const loggedInUser = await loginUser();
+    setUser(loggedInUser);
+  };
+
+  const handleCheckIn = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/nft/mint`,
+        {
+          latitude: 35.6586, // Example coordinates
+          longitude: 139.7454,
+          userId: user.id,
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error checking in:", error);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Travel Log</h1>
+      {!user && <button onClick={handleLogin}>Login with Privy</button>}
+      {user && <button onClick={handleCheckIn}>Check In</button>}
     </div>
   );
-}
+};
 
 export default App;
