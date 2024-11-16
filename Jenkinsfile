@@ -20,7 +20,6 @@ pipeline {
             steps {
                 echo "Setting up Node.js environment with nvm."
                 sh """
-                    source ~/.nvm/nvm.sh
                     nvm install ${NODE_VERSION}
                     nvm use ${NODE_VERSION}
                     node -v
@@ -48,7 +47,6 @@ pipeline {
             steps {
                 echo "Starting the Next.js server with PM2."
                 sh """
-                    source ~/.nvm/nvm.sh
                     cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/
                     pm2 stop ${REPO_NAME} || true
                     pm2 start ecosystem.config.js --env production
