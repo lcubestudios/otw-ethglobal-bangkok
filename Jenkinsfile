@@ -19,11 +19,13 @@ pipeline {
     }
 
     stages {
-        stage("Setup Node.js Environment") {
+        stage("Install NVM and Setup Node.js") {
             steps {
-                echo "Setting up Node.js environment with nvm."
+                echo "Installing NVM and setting up Node.js environment."
                 sh """
-                    source ~/.nvm/nvm.sh
+                    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+                    export NVM_DIR="\$HOME/.nvm"
+                    [ -s "\$NVM_DIR/nvm.sh" ] && . "\$NVM_DIR/nvm.sh"
                     nvm install ${NODE_VERSION}
                     nvm use ${NODE_VERSION}
                     node -v
@@ -31,6 +33,7 @@ pipeline {
                 """
             }
         }
+
         stage("Create .env File") {
             steps {
                 echo "Creating .env file from Jenkins environment variables."
@@ -66,10 +69,11 @@ pipeline {
             steps {
                 echo "Starting the Next.js server with PM2."
                 sh """
-                    source ~/.nvm/nvm.sh
+                    export NVM_DIR="\$HOME/.nvm"
+                    [ -s "\$NVM_DIR/nvm.sh" ] && . "\$NVM_DIR/nvm.sh"
                     cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/
                     pm2 stop ${REPO_NAME} || true
-                    pm2 start ecosystem.config.js --env production
+                    pm2 start npm --name ${REPO_NAME} -- run start
                     pm2 save
                 """
                 slackSend color: "good", message: "Next.js server started successfully with PM2 for ${REPO_NAME}."
