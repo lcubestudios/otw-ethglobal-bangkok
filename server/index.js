@@ -236,15 +236,12 @@ const contractAbi = [
 // Create a contract instance
 const contract = new ethers.Contract(contractAddress, contractAbi, wallet);
 
-// Hardcoded coordinates (simulate user's location)
-const hardcodedLatitude = 13.7607; // Example: Central Bangkok
-const hardcodedLongitude = 100.4978;
-
 // Endpoint to get nearby places
 app.get('/nearby-places', async (req, res) => {
   try {
+    const { latitude, longitude } = req.body;
     // Use Google Places API to find nearby places
-    const placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${hardcodedLatitude},${hardcodedLongitude}&radius=1800&key=${process.env.GOOGLE_API_KEY}`;
+    const placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1800&key=${process.env.GOOGLE_API_KEY}`;
 
     const response = await axios.get(placesUrl);
     const data = response.data;
