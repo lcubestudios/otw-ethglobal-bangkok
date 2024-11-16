@@ -86,7 +86,7 @@ Handles direct interactions with the smart contracts, such as verifying user che
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/your-username/otw-backend.git
-cd otw-backend
+clone https://github.com/lcubestudios/otw-ethglobal-bangkok
+cd otw-ethglobal-bangkok
 npm install
 
