@@ -2,7 +2,8 @@ require("dotenv").config();
 const { ethers } = require("hardhat");
 
 async function main() {
-  const contractAddress = "0x123bf069e87ccF152DE6eC53bf86a1e47255aC01";
+  const contractAddress = "0x123bf069e87ccF152DE6eC53bf86a1e47255aC01"; //Polygon
+  // const contractAddress = "0xd425d05C83fa7c91fDe57c5D932CB52DCfB25d81"; // Arbitrum
   const LocationLogger = await ethers.getContractFactory("LocationLogger");
   const locationLogger = LocationLogger.attach(contractAddress);
 
