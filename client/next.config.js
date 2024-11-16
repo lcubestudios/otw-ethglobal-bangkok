@@ -6,8 +6,7 @@ const nextConfig = {
     };
     return config;
   },
-  reactStrictMode: true,
-  swcMinify: true,
+  reactStrictMode: true
 };
 
 module.exports = nextConfig;
