@@ -1,0 +1,204 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "latitude",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "longitude",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "placeName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "country",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "city",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "zipCode",
+        "type": "string"
+      }
+    ],
+    "name": "LocationRecorded",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "getLocations",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+          },
+          {
+            "internalType": "int256",
+            "name": "latitude",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "longitude",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "placeName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "country",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "city",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "zipCode",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct LocationLogger.Location[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "locations",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "int256",
+        "name": "latitude",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "longitude",
+        "type": "int256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "placeName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "country",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "city",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "zipCode",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "int256",
+        "name": "latitude",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "longitude",
+        "type": "int256"
+      },
+      {
+        "internalType": "string",
+        "name": "placeName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "country",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "city",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "zipCode",
+        "type": "string"
+      }
+    ],
+    "name": "logLocation",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

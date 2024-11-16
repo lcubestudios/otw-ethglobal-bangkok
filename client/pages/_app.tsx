@@ -2,9 +2,14 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { PrivyProvider } from "@privy-io/react-auth";
+import { useRouter } from "next/router";
+import PageFooter from "../components/page/footer";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const pageTitle = `Login | ${process.env.NEXT_PUBLIC_PAGE_TITLE}`
+  const pageTitle = `${process.env.NEXT_PUBLIC_PAGE_TITLE}`;
+  const router = useRouter();
+
+  const isHomePage = router.pathname === "/";
 
   return (
     <>
@@ -50,7 +55,14 @@ function MyApp({ Component, pageProps }: AppProps) {
           },
         }}
       >
-        <Component {...pageProps} />
+        <div id="viewport" className="flex flex-col overflow-hidden gap-8">
+          <section className="flex-1 relative overflow-hidden">
+            <div className="absolute inset-0 overflow-y-auto" >
+              <Component {...pageProps} />
+            </div>
+          </section>
+          {!isHomePage && (<PageFooter />)}
+        </div>
       </PrivyProvider>
     </>
   );

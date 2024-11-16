@@ -1,4 +1,3 @@
-import Portal from "../components/graphics/portal";
 import { useLogin } from "@privy-io/react-auth";
 import { PrivyClient } from "@privy-io/server-auth";
 import { GetServerSideProps } from "next";
@@ -31,33 +30,25 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 };
 
 export default function LoginPage() {
+  const pageTitle = `Login | ${process.env.NEXT_PUBLIC_PAGE_TITLE}`
   const router = useRouter();
   const { login } = useLogin({
-    onComplete: () => router.push("/dashboard"),
+    onComplete: () => router.push("/profile"),
   });
 
   return (
     <>
       <Head>
-        <title>Login · Privy</title>
+        <title>{pageTitle}</title>
       </Head>
 
-      <main className="flex">
-        <div className="flex bg-privy-light-blue flex-1 p-6 justify-center items-center">
-          <div>
-            <div>
-              <Portal style={{ maxWidth: "100%", height: "auto" }} />
-            </div>
-            <div className="mt-6 flex justify-center text-center">
-              <button
-                className="bg-violet-600 hover:bg-violet-700 py-3 px-6 text-white rounded-lg"
-                onClick={login}
-              >
-                Log in
-              </button>
-            </div>
-          </div>
-        </div>
+      <main className="w-full h-full flex justify-center items-center">
+        <button
+          className="w-full p-4 bg-gray-200 hover:bg-gray-400 rounded-lg"
+          onClick={login}
+        >
+         LOG IN
+        </button>
       </main>
     </>
   );

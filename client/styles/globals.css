@@ -100,7 +100,7 @@ html, body {
   height: 100%;
 }
 
-main {
+#viewport {
   margin: auto;
   width: 100%;
   max-width: 430px;
@@ -109,5 +109,4 @@ main {
   padding: 20px;
   box-shadow: 0 0 20px 5px rgba(0,0,0,0.2);
   border-radius: 10px;
-  overflow-y: scroll;
 }

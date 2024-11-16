@@ -1,0 +1,26 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: LogContract
+    network: arbitrum-sepolia
+    source:
+      address: "0xd425d05C83fa7c91fDe57c5D932CB52DCfB25d81"
+      abi: LogContract
+      startBlock: 97959147
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - LocationRecorded
+      abis:
+        - name: LogContract
+          file: ./abis/LogContract.json
+      eventHandlers:
+        - event: LocationRecorded(indexed address,int256,int256,uint256,string,string,string,string)
+          handler: handleLocationRecorded
+      file: ./src/log-contract.ts

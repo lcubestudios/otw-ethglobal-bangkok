@@ -1,0 +1,14 @@
+type LocationRecorded @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  latitude: BigInt! # int256
+  longitude: BigInt! # int256
+  timestamp: BigInt! # uint256
+  placeName: String! # string
+  country: String! # string
+  city: String! # string
+  zipCode: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
