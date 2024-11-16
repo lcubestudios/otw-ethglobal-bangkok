@@ -25,27 +25,29 @@ export default function ProfilePage() {
         <title>{pageTitle}</title>
       </Head>
 
-      <main className="flex flex-col gap-12">
-        <header className="flex flex-row justify-between">
-          <div>
-            <h1>Profile</h1>
-            <div>Welcome! View your latest travel logs and earned badges.</div>
+      <main className="flex flex-col gap-10">
+        <header className="flex flex-col gap-2">
+          <div className="flex flex-row justify-between items-center">
+            <div className="flex-1">
+              <h1 className="m-0">Profile</h1>
+            </div>
+            <div>
+              <Link className="text-xs" href="/hotspots">View Hotspots</Link>
+            </div>
           </div>
-          <div>
-            <Link href="/hotspots">View Hotspots</Link>
-          </div>
+          <div>Welcome! View your latest travel logs and earned badges.</div>
         </header>
         <section>
-          <div className="flex flex-row justify-between">
-            <h2>Latest Logs</h2>
-            <span><Link href="/logs">see all logs</Link></span>
+          <div className="flex flex-row justify-between items-center">
+            <h2 className="m-0">Latest Logs</h2>
+            <span><Link className="text-xs" href="/logs">see all logs</Link></span>
           </div>
           <div>List</div>
         </section>
         <section>
-          <div className="flex flex-row justify-between">
-            <h2>Latest Badges</h2>
-            <span><Link href="/badges">see all badges</Link></span>
+          <div className="flex flex-row justify-between items-center">
+            <h2 className="m-0">Latest Badges</h2>
+            <span><Link className="text-xs" href="/badges">see all badges</Link></span>
           </div>
           <div>List</div>
         </section>

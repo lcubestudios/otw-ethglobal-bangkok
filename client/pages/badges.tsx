@@ -25,15 +25,17 @@ export default function BadgesPage() {
         <title>{pageTitle}</title>
       </Head>
 
-      <main className="flex flex-col gap-12">
-        <header className="flex flex-row justify-between">
-          <div>
-            <h1>Badges</h1>
-            <div>See all the badges you've earned for your journeys.</div>
+      <main className="flex flex-col gap-10">
+        <header className="flex flex-col gap-2">
+          <div className="flex flex-row justify-between items-center">
+            <div className="flex-1">
+              <h1 className="m-0">Badges</h1>
+            </div>
+            <div>
+              <Link className="text-xs" href="/profile">Back to Profile</Link>
+            </div>
           </div>
-          <div>
-            <Link href="/profile">Back to Profile</Link>
-          </div>
+          <div>See all the badges you've earned for your journeys.</div>
         </header>
         <section>
           List

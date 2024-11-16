@@ -26,14 +26,16 @@ export default function HotspotsPage() {
       </Head>
 
       <main className="flex flex-col gap-12">
-        <header className="flex flex-row justify-between">
-          <div>
-            <h1>Hot Spots</h1>
-            <div>Discover locations where you can check in and earn unique badges.</div>
+        <header className="flex flex-col gap-2">
+          <div className="flex flex-row justify-between items-center">
+            <div className="flex-1">
+              <h1 className="m-0">Hot Spots</h1>
+            </div>
+            <div>
+              <Link className="text-xs" href="/profile">View Profile</Link>
+            </div>
           </div>
-          <div>
-            <Link href="/profile">View Profile</Link>
-          </div>
+          <div>Discover locations where you can check in and earn unique badges.</div>
         </header>
         <section>
           List
