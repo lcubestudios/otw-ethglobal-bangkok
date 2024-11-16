@@ -10,11 +10,22 @@ const APIURL = process.env.NEXT_PUBLIC_LOG_QUERY_URL
 
 const query = `
   query {
-    tokens(first: 20) {
-      id
-      name
-      symbol
-      decimals
+    locationRecordeds(
+      orderBy: timestamp, 
+      orderDirection: desc
+    ) {
+      id,
+      user,
+      latitude,
+      longitude,
+      timestamp,
+      placeName,
+      country,
+      city,
+      zipCode,
+      blockNumber,
+      blockTimestamp,
+      transactionHash,
     }
   }
 `
@@ -31,6 +42,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     fetchData()
+    console.log('location', navigator.geolocation)
   }, [])
 
   async function fetchData() {
@@ -39,7 +51,7 @@ export default function ProfilePage() {
       if (response.error) {
         throw new Error(response.error.message);
       }
-      setData(response.data.tokens); // Save fetched tokens to state
+      setData(response.data.locationRecordeds);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -51,6 +63,7 @@ export default function ProfilePage() {
   const {
     ready,
     authenticated,
+    logout
   } = usePrivy();
 
   useEffect(() => {
@@ -59,57 +72,57 @@ export default function ProfilePage() {
     }
   }, [ready, authenticated, router]);
 
+  const formatTimestamp = (timestamp: number) => {
+    const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+  
+    // Get hours, minutes, and seconds
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+  
+    // Get month, day, and year
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const day = String(date.getDate()).padStart(2, '0');
+    const year = date.getFullYear();
+  
+    // Combine into desired format
+    return `${hours}:${minutes}:${seconds} ${month}/${day}/${year}`;
+  }
+
   return (
     <>
       <Head>
         <title>{pageTitle}</title>
       </Head>
 
-      <main className="flex flex-col gap-10">
+      <main className="flex flex-col gap-4">
         <header className="flex flex-col gap-2">
           <div className="flex flex-row justify-between items-center">
             <div className="flex-1">
               <h1 className="m-0">Profile</h1>
             </div>
-            <div>
-              <Link className="text-xs" href="/hotspots">
-                View Hotspots
-              </Link>
-            </div>
+            <button
+              onClick={logout}
+              className="p-4 bg-gray-200 hover:bg-gray-400 rounded-lg"
+            >
+              LOGOUT
+            </button>
           </div>
-          <div>Welcome! View your latest travel logs and earned badges.</div>
+          <div>Explore a complete list of your travel adventures.</div>
         </header>
         <section>
-          <div className="flex flex-row justify-between items-center">
-            <h2 className="m-0">Latest Logs</h2>
-            <span><Link className="text-xs" href="/logs">see all logs</Link></span>
-          </div>
-          <div>List</div>
-        </section>
-        <section>
-          <div className="flex flex-row justify-between items-center">
-            <h2 className="m-0">Latest Badges</h2>
-            <span><Link className="text-xs" href="/badges">see all badges</Link></span>
-          </div>
-          <div>List</div>
-        </section>
-        <section>
-          <div className="flex flex-row justify-between items-center">
-            <h2 className="m-0">Test Tokens</h2>
-            <span>
-              <Link className="text-xs" href="/tokens">
-                see all tokens
-              </Link>
-            </span>
-          </div>
           <div>
             {loading && <p>Loading...</p>}
             {error && <p>Error: {error}</p>}
             {!loading && !error && (
-              <ul>
-                {data.map((token) => (
-                  <li key={token.id}>
-                    {token.name} ({token.symbol}) - Decimals: {token.decimals}
+              <ul className="flex flex-col gap-2 text-sm ">
+                {data.map((record) => (
+                  <li 
+                    key={record.id}
+                    className="grid grid-cols-3 pb-2 border-b-solid border-b-[1px] border-gray-300"
+                  >
+                    <span className="col-span-2">{record.placeName}</span>
+                    <span className="col-span-1">{formatTimestamp(record.timestamp)}</span>
                   </li>
                 ))}
               </ul>
