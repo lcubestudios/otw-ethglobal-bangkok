@@ -4,6 +4,8 @@ import Head from "next/head";
 import { PrivyProvider } from "@privy-io/react-auth";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const pageTitle = `Login | ${process.env.NEXT_PUBLIC_PAGE_TITLE}`
+
   return (
     <>
       <Head>
@@ -37,7 +39,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />
         <link rel="manifest" href="/favicons/manifest.json" />
 
-        <title>On The Way</title>
+        <title>{pageTitle}</title>
         <meta name="description" content="Privy Auth Starter" />
       </Head>
       <PrivyProvider

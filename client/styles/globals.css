@@ -21,3 +21,91 @@
     font-weight: 600;
   }
 }
+/* Base styles for headers */
+h1 {
+  font-size: 2.5rem; /* Large title */
+  font-weight: bold;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 2rem; /* Section title */
+  font-weight: bold;
+  line-height: 1.3;
+  margin-bottom: 0.9rem;
+}
+
+h3 {
+  font-size: 1.75rem; /* Subsection title */
+  font-weight: bold;
+  line-height: 1.4;
+  margin-bottom: 0.8rem;
+}
+
+h4 {
+  font-size: 1.5rem; /* Smaller section title */
+  font-weight: bold;
+  line-height: 1.5;
+  margin-bottom: 0.7rem;
+}
+
+h5 {
+  font-size: 1.25rem; /* Subheading */
+  font-weight: bold;
+  line-height: 1.6;
+  margin-bottom: 0.6rem;
+}
+
+h6 {
+  font-size: 1rem; /* Smallest header */
+  font-weight: bold;
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
+}
+
+/* Optional: Adjust for responsive design */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.75rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+  h4 {
+    font-size: 1.25rem;
+  }
+  h5 {
+    font-size: 1rem;
+  }
+  h6 {
+    font-size: 0.875rem;
+  }
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+}
+
+#__next {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+main {
+  margin: auto;
+  width: 100%;
+  max-width: 430px;
+  height: 100%;
+  max-height: 932px;
+  padding: 20px;
+  box-shadow: 0 0 20px 5px rgba(0,0,0,0.2);
+}

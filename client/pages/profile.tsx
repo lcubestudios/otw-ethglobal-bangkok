@@ -5,8 +5,8 @@ import { usePrivy } from "@privy-io/react-auth";
 import Head from "next/head";
 import Link from "next/link";
 
-export default function HotspotsPage() {
-  const pageTitle = `Hot Spots | ${process.env.NEXT_PUBLIC_PAGE_TITLE}`
+export default function ProfilePage() {
+  const pageTitle = `Profile | ${process.env.NEXT_PUBLIC_PAGE_TITLE}`
   const router = useRouter();
   const {
     ready,
@@ -28,15 +28,26 @@ export default function HotspotsPage() {
       <main className="flex flex-col gap-12">
         <header className="flex flex-row justify-between">
           <div>
-            <h1>Hot Spots</h1>
-            <div>Discover locations where you can check in and earn unique badges.</div>
+            <h1>Profile</h1>
+            <div>Welcome! View your latest travel logs and earned badges.</div>
           </div>
           <div>
-            <Link href="/profile">View Profile</Link>
+            <Link href="/hotspots">View Hotspots</Link>
           </div>
         </header>
         <section>
-          List
+          <div className="flex flex-row justify-between">
+            <h2>Latest Logs</h2>
+            <span><Link href="/logs">see all logs</Link></span>
+          </div>
+          <div>List</div>
+        </section>
+        <section>
+          <div className="flex flex-row justify-between">
+            <h2>Latest Badges</h2>
+            <span><Link href="/badges">see all badges</Link></span>
+          </div>
+          <div>List</div>
         </section>
       </main>
     </>
