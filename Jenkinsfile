@@ -20,22 +20,6 @@ pipeline {
     }
 
     stages {
-        stage("Create .env File") {
-            steps {
-                echo "Creating .env file from Jenkins environment variables."
-                sh """
-                    cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/
-                    cat > .env <<EOF
-                    NEXT_PUBLIC_PAGE_TITLE=${NEXT_PUBLIC_PAGE_TITLE}
-                    NEXT_PUBLIC_PRIVY_APP_ID=${NEXT_PUBLIC_PRIVY_APP_ID}
-                    PRIVY_APP_SECRET=${PRIVY_APP_SECRET}
-                    NODE_ENV=production
-                    PORT=3000
-                    EOF
-                """
-                echo "Successfully created .env file."
-            }
-        }
         stage("Install Dependencies") {
             steps {
                 echo "Installing dependencies on ${NODE_NAME}."

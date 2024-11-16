@@ -1,18 +1,11 @@
-// scripts/deploy.js
 const hre = require("hardhat");
 
 async function main() {
-  const TravelBadge = await hre.ethers.getContractFactory("TravelBadge");
-  const travelBadge = await TravelBadge.deploy();
+  const LocationLogger = await hre.ethers.getContractFactory("LocationLogger");
+  const locationLogger = await LocationLogger.deploy();
 
-  await travelBadge.deployed();
-  console.log("TravelBadge deployed to:", travelBadge.address);
-
-  const HotspotRegistry = await hre.ethers.getContractFactory("HotspotRegistry");
-  const hotspotRegistry = await HotspotRegistry.deploy();
-
-  await hotspotRegistry.deployed();
-  console.log("HotspotRegistry deployed to:", hotspotRegistry.address);
+  await locationLogger.waitForDeployment();
+  console.log("LocationLogger deployed to:", await locationLogger.getAddress());
 }
 
 main().catch((error) => {
