@@ -37,8 +37,8 @@ pipeline {
         stage("Deploy to Server") {
             steps {
                 echo "Deploying the application to Apache server."
-                sh "if [ ! -d ${APACHE_DIR}/${BRANCH_NAME}/${REPO_NAME}/ ]; then mkdir -p ${APACHE_DIR}/${BRANCH_NAME}/${REPO_NAME}/; fi"
-                sh "rsync -Puqr --delete-during ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/build/ ${APACHE_DIR}/${BRANCH_NAME}/${REPO_NAME}/"
+                sh "if [ ! -d ${APACHE_DIR}/${BRANCH_NAME}/${REPO_NAME} ]; then mkdir -p ${APACHE_DIR}/${BRANCH_NAME}/${REPO_NAME}/; fi"
+                sh "rsync -Puqr --delete-during ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/build/ ${APACHE_DIR}/${BRANCH_NAME}/${REPO_NAME}/"
                 slackSend color: "good", message: "Deployment successful for ${REPO_NAME}."
             }
         }
