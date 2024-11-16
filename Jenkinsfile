@@ -7,19 +7,27 @@ pipeline {
         PACKAGE_MANAGER = 'npm'
         BUILD_COMMAND = 'npm run build'
         START_COMMAND = 'npm run start'
-        
-        // Environment Variables
-        NEXT_PUBLIC_PRIVY_APP_ID = 'cm3juc4bo00mz28ul3iduqvf1'
-        PRIVY_APP_SECRET = '3nBoKmDYJWz8ya2q9eBTABjzx6ofjyeDBc1pdF9zVfY22syc5EghoCGsTMFLJoebKU2cfjGjnzuV7csshMNiGLAS'
-        
+        NODE_VERSION = '20.12.2'
+
         // Apache Configuration
         APACHE_DIR = '/var/www/html'
         SNYK_ID = 'lcube-snyk-token'
         JK_WORKSPACE = '/var/www/jenkins/workspace'
-        NEXT_PORT = '3000'
     }
 
     stages {
+        stage("Setup Node.js Environment") {
+            steps {
+                echo "Setting up Node.js environment with nvm."
+                sh """
+                    source ~/.nvm/nvm.sh
+                    nvm install ${NODE_VERSION}
+                    nvm use ${NODE_VERSION}
+                    node -v
+                    npm -v
+                """
+            }
+        }
         stage("Install Dependencies") {
             steps {
                 echo "Installing dependencies on ${NODE_NAME}."
@@ -36,14 +44,21 @@ pipeline {
             }
         }
 
-        stage("Start Next.js Server") {
+        stage("Start Next.js Server with PM2") {
             steps {
-                echo "Starting the Next.js server with local PM2."
-                sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/ && npx pm2 stop ${REPO_NAME} || true'
-                sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/ && npx pm2 start npm --name ${REPO_NAME} -- run start'
+                echo "Starting the Next.js server with PM2."
+                sh """
+                    source ~/.nvm/nvm.sh
+                    cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/
+                    pm2 stop ${REPO_NAME} || true
+                    pm2 start ecosystem.config.js --env production
+                    pm2 save
+                """
+                slackSend color: "good", message: "Next.js server started successfully with PM2 for ${REPO_NAME}."
             }
         }
     }
+
 
     post {
         success {
