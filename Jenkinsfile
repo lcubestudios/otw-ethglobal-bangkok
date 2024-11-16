@@ -1,6 +1,5 @@
 pipeline {
     agent { label 'lcube-web' }
-    tools { nodejs 'node-20' }
 
     environment {
         REPO_NAME = 'otw-ethglobal-bangkok'
@@ -28,8 +27,11 @@ pipeline {
                     [ -s "\$NVM_DIR/nvm.sh" ] && . "\$NVM_DIR/nvm.sh"
                     nvm install ${NODE_VERSION}
                     nvm use ${NODE_VERSION}
+                    npm install -g pm2
+                    export PATH=\$NVM_DIR/versions/node/v${NODE_VERSION}/bin:\$PATH
                     node -v
                     npm -v
+                    pm2 -v
                 """
             }
         }
@@ -49,11 +51,18 @@ pipeline {
                 echo "Successfully created .env file."
             }
         }
+
         stage("Install Dependencies") {
             steps {
                 echo "Installing dependencies on ${NODE_NAME}."
                 slackSend color: "warning", message: "Installing dependencies for ${REPO_NAME} from ${BRANCH_NAME} branch..."
-                sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/ && ${PACKAGE_MANAGER} install'
+                sh """
+                    export NVM_DIR="\$HOME/.nvm"
+                    [ -s "\$NVM_DIR/nvm.sh" ] && . "\$NVM_DIR/nvm.sh"
+                    export PATH=\$NVM_DIR/versions/node/v${NODE_VERSION}/bin:\$PATH
+                    cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/
+                    ${PACKAGE_MANAGER} install
+                """
             }
         }
 
@@ -61,7 +70,13 @@ pipeline {
             steps {
                 echo "Building the application on ${NODE_NAME}."
                 slackSend color: "warning", message: "Starting build process for ${REPO_NAME} from ${BRANCH_NAME} branch..."
-                sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/ && ${BUILD_COMMAND}'
+                sh """
+                    export NVM_DIR="\$HOME/.nvm"
+                    [ -s "\$NVM_DIR/nvm.sh" ] && . "\$NVM_DIR/nvm.sh"
+                    export PATH=\$NVM_DIR/versions/node/v${NODE_VERSION}/bin:\$PATH
+                    cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/
+                    ${BUILD_COMMAND}
+                """
             }
         }
 
@@ -71,16 +86,16 @@ pipeline {
                 sh """
                     export NVM_DIR="\$HOME/.nvm"
                     [ -s "\$NVM_DIR/nvm.sh" ] && . "\$NVM_DIR/nvm.sh"
+                    export PATH=\$NVM_DIR/versions/node/v${NODE_VERSION}/bin:\$PATH
                     cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/
                     pm2 stop ${REPO_NAME} || true
-                    pm2 start ecosystem.config.js
+                    pm2 start ecosystem.config.js --env production
                     pm2 save
                 """
                 slackSend color: "good", message: "Next.js server started successfully with PM2 for ${REPO_NAME}."
             }
         }
     }
-
 
     post {
         success {
