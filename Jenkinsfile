@@ -24,7 +24,6 @@ pipeline {
             steps {
                 echo "Installing dependencies on ${NODE_NAME}."
                 slackSend color: "warning", message: "Installing dependencies for ${REPO_NAME} from ${BRANCH_NAME} branch..."
-                sh 'npm cache clean --force'
                 sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME} && ${PACKAGE_MANAGER} install'
             }
         }
@@ -34,13 +33,6 @@ pipeline {
                 echo "Building the application on ${NODE_NAME}."
                 slackSend color: "warning", message: "Starting build process for ${REPO_NAME} from ${BRANCH_NAME} branch..."
                 sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME} && ${BUILD_COMMAND}'
-            }
-        }
-        stage("Install PM2 Globally") {
-            steps {
-                echo "Installing PM2 globally."
-                sh 'npm install -g pm2'
-                sh 'pm2 --version'
             }
         }
 
