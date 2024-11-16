@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'frontend-node' }
+    agent { label 'lcube-web' }
     tools { nodejs 'node-20' }
 
     environment {
@@ -30,7 +30,7 @@ pipeline {
             steps {
                 echo "Building the application on ${NODE_NAME}."
                 slackSend color: "warning", message: "Starting build process for ${REPO_NAME} from ${BRANCH_NAME} branch..."
-                sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME} && ${BUILD_COMMAND}'
+                sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client && ${BUILD_COMMAND}'
             }
         }
 
