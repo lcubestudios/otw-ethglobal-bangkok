@@ -48,6 +48,7 @@ pipeline {
                 sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/ && ${BUILD_COMMAND}'
             }
         }
+    }
     post {
         success {
             echo 'The pipeline completed successfully.'
