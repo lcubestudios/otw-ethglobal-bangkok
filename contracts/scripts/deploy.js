@@ -1,15 +1,21 @@
-async function main() {
-  const [deployer] = await ethers.getSigners();
-  console.log("Deploying contracts with the account:", deployer.address);
+// scripts/deploy.js
+const hre = require("hardhat");
 
-  const TravelNFT = await ethers.getContractFactory("TravelNFT");
-  const travelNFT = await TravelNFT.deploy();
-  console.log("Contract deployed to:", travelNFT.address);
+async function main() {
+  const TravelBadge = await hre.ethers.getContractFactory("TravelBadge");
+  const travelBadge = await TravelBadge.deploy();
+
+  await travelBadge.deployed();
+  console.log("TravelBadge deployed to:", travelBadge.address);
+
+  const HotspotRegistry = await hre.ethers.getContractFactory("HotspotRegistry");
+  const hotspotRegistry = await HotspotRegistry.deploy();
+
+  await hotspotRegistry.deployed();
+  console.log("HotspotRegistry deployed to:", hotspotRegistry.address);
 }
 
-main()
-  .then(() => process.exit(0))
-  .catch((error) => {
-    console.error(error);
-    process.exit(1);
-  });
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
