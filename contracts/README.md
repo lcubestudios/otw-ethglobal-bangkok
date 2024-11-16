@@ -26,7 +26,7 @@ Welcome to the **OTW (On The Way)** smart contracts folder. This folder contains
 
 ## **Smart Contracts Overview**
 
-### **1. AnimeTravelBadge.sol**
+### **1. TravelBadge.sol**
 
 This is the main NFT contract, implementing the **ERC-721** standard for minting unique NFTs as digital souvenirs when users check in at predefined hotspots.
 
