@@ -7,7 +7,6 @@ pipeline {
         PACKAGE_MANAGER = 'npm'
         BUILD_COMMAND = 'npm run build'
         START_COMMAND = 'npm run start'
-        NODE_VERSION = '20.12.2'
         
         // ENV Variables
         NEXT_PUBLIC_PAGE_TITLE='On The Way'
@@ -21,18 +20,6 @@ pipeline {
     }
 
     stages {
-        stage("Setup Node.js Environment") {
-            steps {
-                echo "Setting up Node.js environment with nvm."
-                sh """
-                    source ~/.nvm/nvm.sh
-                    nvm install ${NODE_VERSION}
-                    nvm use ${NODE_VERSION}
-                    node -v
-                    npm -v
-                """
-            }
-        }
         stage("Create .env File") {
             steps {
                 echo "Creating .env file from Jenkins environment variables."
@@ -64,23 +51,7 @@ pipeline {
                 sh 'cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/ && ${BUILD_COMMAND}'
             }
         }
-
-        stage("Start Next.js Server with PM2") {
-            steps {
-                echo "Starting the Next.js server with PM2."
-                sh """
-                    source ~/.nvm/nvm.sh
-                    cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/
-                    pm2 stop ${REPO_NAME} || true
-                    pm2 start ecosystem.config.js --env production
-                    pm2 save
-                """
-                slackSend color: "good", message: "Next.js server started successfully with PM2 for ${REPO_NAME}."
-            }
-        }
     }
-
-
     post {
         success {
             echo 'The pipeline completed successfully.'
