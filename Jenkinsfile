@@ -8,6 +8,9 @@ pipeline {
         BUILD_COMMAND = 'npm run build'
         START_COMMAND = 'npm run start'
         NODE_VERSION = '20.12.2'
+        
+        NEXT_PUBLIC_PRIVY_APP_ID='cm3juc4bo00mz28ul3iduqvf1'
+        PRIVY_APP_SECRET='3nBoKmDYJWz8ya2q9eBTABjzx6ofjyeDBc1pdF9zVfY22syc5EghoCGsTMFLJoebKU2cfjGjnzuV7csshMNiGLAS'
 
         // Apache Configuration
         APACHE_DIR = '/var/www/html'
@@ -20,11 +23,27 @@ pipeline {
             steps {
                 echo "Setting up Node.js environment with nvm."
                 sh """
+                    source ~/.nvm/nvm.sh
                     nvm install ${NODE_VERSION}
                     nvm use ${NODE_VERSION}
                     node -v
                     npm -v
                 """
+            }
+        }
+        stage("Create .env File") {
+            steps {
+                echo "Creating .env file from Jenkins environment variables."
+                sh """
+                    cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/
+                    cat > .env <<EOF
+                    NEXT_PUBLIC_PRIVY_APP_ID=${NEXT_PUBLIC_PRIVY_APP_ID}
+                    PRIVY_APP_SECRET=${PRIVY_APP_SECRET}
+                    NODE_ENV=production
+                    PORT=3000
+                    EOF
+                """
+                echo "Successfully created .env file."
             }
         }
         stage("Install Dependencies") {
@@ -47,6 +66,7 @@ pipeline {
             steps {
                 echo "Starting the Next.js server with PM2."
                 sh """
+                    source ~/.nvm/nvm.sh
                     cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/
                     pm2 stop ${REPO_NAME} || true
                     pm2 start ecosystem.config.js --env production
