@@ -22,38 +22,23 @@ The OTW backend API is built using Express.js and integrates directly with the P
 
 ## **Backend API Routes Plan**
 
-### **1. Authentication Routes (`/auth`)**
-
-Handles user login and registration using Privy for secure, privacy-focused authentication.
-
-| Method | Endpoint       | Description                     |
-| ------ | -------------- | ------------------------------- |
-| POST   | `/auth/login`  | User login using Privy.         |
-| POST   | `/auth/register` | User registration using Privy.   |
-| POST   | `/auth/logout` | User logout and session cleanup. |
-
-### **2. User Profile Routes (`/profile`)**
+### **1. User Profile Routes (`/profile`)**
 
 Manages user profiles, allowing users to update their information and view their ENS-linked profile.
 
 | Method | Endpoint        | Description                       |
 | ------ | --------------- | --------------------------------- |
 | GET    | `/profile`      | Fetch current user profile (ENS data). |
-| PUT    | `/profile/update` | Update user profile information.   |
 
-### **3. Travel Logs Routes (`/logs`)**
+### **2. Travel Logs Routes (`/logs`)**
 
 Logs user check-ins directly to the blockchain, creating a secure, immutable record of their travels.
 
 | Method | Endpoint                   | Description                                       |
 | ------ | -------------------------- | ------------------------------------------------- |
 | POST   | `/logs/create`             | Create a new travel log entry (writes to blockchain). |
-| GET    | `/logs`                    | Fetch all travel logs for the current user (from blockchain). |
-| GET    | `/logs/date/:date`         | Fetch logs by a specific date.                    |
-| GET    | `/logs/location/:location` | Fetch logs for a specific location (e.g., city).  |
-| GET    | `/logs/country/:country`   | Fetch logs for a specific country.                |
 
-### **4. NFT Routes (`/nfts`)**
+### **3. NFT Routes (`/nfts`)**
 
 Handles interactions with NFTs, including minting and fetching user NFT collections.
 
@@ -63,7 +48,7 @@ Handles interactions with NFTs, including minting and fetching user NFT collecti
 | GET    | `/nfts/:tokenId`        | Fetch metadata for a specific NFT.                    |
 | POST   | `/nfts/mint`            | Mint a new NFT when the user checks in at a hotspot.  |
 
-### **5. Hotspot Routes (`/hotspots`)**
+### **4. Hotspot Routes (`/hotspots`)**
 
 Manages and fetches curated hotspot locations where users can earn NFTs.
 
@@ -73,7 +58,7 @@ Manages and fetches curated hotspot locations where users can earn NFTs.
 | GET    | `/hotspots/:id`      | Fetch details of a specific hotspot.              |
 | POST   | `/hotspots/add`      | Add a new hotspot (admin-only route).             |
 
-### **6. Web3 Interaction Routes (`/web3`)**
+### **5. Web3 Interaction Routes (`/web3`)**
 
 Handles direct interactions with the smart contracts, such as verifying user check-ins and fetching contract details.
 
@@ -89,7 +74,7 @@ Handles direct interactions with the smart contracts, such as verifying user che
 
 ### **1. Prerequisites**
 
-- Node.js (v16 or higher)
+- Node.js (v20 or higher)
 - npm or yarn
 - Polygon RPC URL (Infura or Alchemy)
 - Privy API keys
