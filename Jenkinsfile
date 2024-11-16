@@ -1,6 +1,6 @@
 pipeline {
     agent { label 'frontend-node' }
-    tools { nodejs 'node-20.12.2' }
+    tools { nodejs 'node-20' }
 
     environment {
         REPO_NAME = 'otw-ethglobal-bangkok'
