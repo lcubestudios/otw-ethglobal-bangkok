@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />
         <link rel="manifest" href="/favicons/manifest.json" />
 
-        <title>Privy Auth Starter</title>
+        <title>On The Way</title>
         <meta name="description" content="Privy Auth Starter" />
       </Head>
       <PrivyProvider
