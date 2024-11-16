@@ -2,9 +2,9 @@ require("dotenv").config();
 const { ethers } = require("hardhat");
 
 async function main() {
-  const contractAddress = "0x4feeF965991ECfe3A184AD51350130133238fca4";
+  const contractAddress = "0x123bf069e87ccF152DE6eC53bf86a1e47255aC01";
   const LocationLogger = await ethers.getContractFactory("LocationLogger");
-  const locationLogger = new ethers.Contract(contractAddress, LocationLogger.interface, hre.ethers.provider);
+  const locationLogger = LocationLogger.attach(contractAddress);
 
   console.log("Fetching recorded locations...");
   const locations = await locationLogger.getLocations();
@@ -14,10 +14,11 @@ async function main() {
     console.log(`  User: ${location.user}`);
     console.log(`  Latitude: ${(location.latitude.toString() / 100000).toFixed(6)}`);
     console.log(`  Longitude: ${(location.longitude.toString() / 100000).toFixed(6)}`);
-    
-    // Convert timestamp from BigInt to a number and format the date
-    const timestamp = Number(location.timestamp.toString());
-    console.log(`  Timestamp: ${new Date(timestamp * 1000).toLocaleString()}`);
+    console.log(`  Timestamp: ${new Date(Number(location.timestamp.toString()) * 1000).toLocaleString()}`);
+    console.log(`  Place Name: ${location.placeName}`);
+    console.log(`  Country: ${location.country}`);
+    console.log(`  City: ${location.city}`);
+    console.log(`  Zip Code: ${location.zipCode}`);
   });
 }
 
