@@ -1,46 +1,39 @@
 {
-  "name": "client",
-  "version": "1.0.0",
   "private": true,
-  "dependencies": {
-    "@privy-io/privy-browser": "^0.0.3",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.7.7",
-    "dotenv": "^16.4.5",
-    "hardhat": "0.0.7",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-scripts": "^5.0.1",
-    "web-vitals": "^2.1.4",
-    "webpack": "^5.96.1"
+  "engines": {
+    "npm": ">=9.0.0",
+    "node": ">=18.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "format": "npx prettier --write \"{__tests__,components,pages,styles}/**/*.{ts,tsx,js,jsx}\"",
+    "lint": "next lint && npx prettier --check \"{__tests__,components,pages,styles}/**/*.{ts,tsx,js,jsx}\" && npx tsc --noEmit"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "@headlessui/react": "^1.7.3",
+    "@heroicons/react": "^2.0.12",
+    "@privy-io/react-auth": "1.94.2",
+    "@privy-io/server-auth": "1.16.3",
+    "@tailwindcss/forms": "^0.5.3",
+    "next": "latest",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@tsconfig/next": "^2.0.0",
+    "@tsconfig/node18": "^18.2.0",
+    "@tsconfig/strictest": "^2.0.1",
+    "@types/node": "^18",
+    "@types/react": "18.2.0",
+    "autoprefixer": "^10.4.7",
+    "dotenv-cli": "^6.0.0",
+    "eslint": "^8.23.0",
+    "eslint-config-next": "12.2.5",
+    "postcss": "^8.4.14",
+    "tailwindcss": "^3.1.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
   }
 }
