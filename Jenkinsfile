@@ -9,6 +9,8 @@ pipeline {
         START_COMMAND = 'npm run start'
         NODE_VERSION = '20.12.2'
         
+        // ENV Variables
+        NEXT_PUBLIC_PAGE_TITLE='On The Way'
         NEXT_PUBLIC_PRIVY_APP_ID='cm3juc4bo00mz28ul3iduqvf1'
         PRIVY_APP_SECRET='3nBoKmDYJWz8ya2q9eBTABjzx6ofjyeDBc1pdF9zVfY22syc5EghoCGsTMFLJoebKU2cfjGjnzuV7csshMNiGLAS'
 
@@ -37,6 +39,7 @@ pipeline {
                 sh """
                     cd ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/client/
                     cat > .env <<EOF
+                    NEXT_PUBLIC_PAGE_TITLE=${NEXT_PUBLIC_PAGE_TITLE}
                     NEXT_PUBLIC_PRIVY_APP_ID=${NEXT_PUBLIC_PRIVY_APP_ID}
                     PRIVY_APP_SECRET=${PRIVY_APP_SECRET}
                     NODE_ENV=production
