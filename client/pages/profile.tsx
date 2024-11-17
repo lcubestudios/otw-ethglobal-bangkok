@@ -9,9 +9,10 @@ import Link from "next/link";
 const APIURL = process.env.NEXT_PUBLIC_LOG_QUERY_URL
 
 const query = `
-  query {
+  query GetLocationRecords($user: String!) {
     locationRecordeds(
-      orderBy: timestamp, 
+      where: { user: $user },
+      orderBy: timestamp,
       orderDirection: desc
     ) {
       id,
@@ -25,10 +26,10 @@ const query = `
       zipCode,
       blockNumber,
       blockTimestamp,
-      transactionHash,
+      transactionHash
     }
   }
-`
+`;
 
 const client = createClient({
   url: APIURL,
@@ -36,35 +37,43 @@ const client = createClient({
 })
 
 export default function ProfilePage() {
+  const pageTitle = `Profile | ${process.env.NEXT_PUBLIC_PAGE_TITLE}`
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const router = useRouter();
+  const {
+    ready,
+    authenticated,
+    user,
+    logout,
+  } = usePrivy();
 
   useEffect(() => {
-    fetchData()
+    if (user?.wallet?.address) fetchData()
+    setData(null);
+    setLoading(false);
     console.log('location', navigator.geolocation)
   }, [])
 
   async function fetchData() {
+    const variables = { user: user?.wallet?.address };
+
     try {
-      const response = await client.query(query).toPromise();
+      const response = await client.query(query, variables).toPromise();
       if (response.error) {
         throw new Error(response.error.message);
       }
-      setData(response.data.locationRecordeds);
+
+      if (response.data.locationRecordeds && response.data.locationRecordeds.length > 0) setData(response.data.locationRecordeds);
+      else setData(null);
+      
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
   }
-  const pageTitle = `Profile | ${process.env.NEXT_PUBLIC_PAGE_TITLE}`
-  const router = useRouter();
-  const {
-    ready,
-    authenticated,
-    logout
-  } = usePrivy();
 
   useEffect(() => {
     if (ready && !authenticated) {
@@ -103,7 +112,7 @@ export default function ProfilePage() {
             </div>
             <button
               onClick={logout}
-              className="p-4 bg-gray-200 hover:bg-gray-400 rounded-lg"
+              className="text-xs p-2 bg-gray-200 hover:bg-gray-400 rounded-lg"
             >
               LOGOUT
             </button>
@@ -114,7 +123,7 @@ export default function ProfilePage() {
           <div>
             {loading && <p>Loading...</p>}
             {error && <p>Error: {error}</p>}
-            {!loading && !error && (
+            {!loading && !error && data && (
               <ul className="flex flex-col gap-2 text-sm ">
                 {data.map((record) => (
                   <li 
@@ -126,6 +135,10 @@ export default function ProfilePage() {
                   </li>
                 ))}
               </ul>
+            )}
+            {data}
+            {!loading && !error && !data && (
+              <p>No records yet, click "CHECK IN" button to start saving your memories!</p>
             )}
           </div>
         </section>

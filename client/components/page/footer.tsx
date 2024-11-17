@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { usePrivy } from "@privy-io/react-auth";
 
-export default function PageFooter() {  
-  const [setLocation] = useState(null);
+export default function PageFooter() { 
   const [error, setError] = useState(null);
   const [places, setPlaces] = useState(null);
+  const {
+    user
+  } = usePrivy();
 
   const handleGetPlaces = () => {
     if (!navigator.geolocation) {
@@ -14,10 +17,8 @@ export default function PageFooter() {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
-
-        // Perform API call
         try {
-          const response = await fetch("http://localhost:3001/nearby-places", {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/nearby-places`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -43,6 +44,26 @@ export default function PageFooter() {
   const handleCancel = () => {
     setPlaces(null);
     setError(null);
+  }
+
+  const handleCheckIn = async (place_id: number) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/log-location`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          placeId: place_id,
+          userAddress: user?.wallet?.address
+        }),
+      });
+
+      const data = await response.json();
+      console.log('test', data);
+    } catch (apiError) {
+      setError("Failed to log location via API.");
+    }
   }
 
   return (
@@ -74,6 +95,7 @@ export default function PageFooter() {
                     <button
                       key={place.place_id}
                       className="text-left p-2 border-b-solid border-b-[1px] border-gray-300"
+                      onClick={() => handleCheckIn(place.place_id)}
                     >
                       <span>{place.name}</span>
                     </button>
