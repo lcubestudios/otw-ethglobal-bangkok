@@ -2,12 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const { ethers } = require('ethers');
+const cors = require("cors");
 
 const app = express();
 const port = 3001;
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+app.use(cors());
 
 // Network selection (default to Arbitrum)
 const network = process.env.NETWORK || 'arbitrum';
@@ -237,7 +239,7 @@ const contractAbi = [
 const contract = new ethers.Contract(contractAddress, contractAbi, wallet);
 
 // Endpoint to get nearby places
-app.get('/nearby-places', async (req, res) => {
+app.post('/nearby-places', async (req, res) => {
   try {
     const { latitude, longitude } = req.body;
     // Use Google Places API to find nearby places
