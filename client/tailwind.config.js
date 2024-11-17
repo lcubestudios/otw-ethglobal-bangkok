@@ -9,10 +9,11 @@ module.exports = {
         sans: ['Adelle Sans', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        'privy-navy': '#160B45',
-        'privy-light-blue': '#EFF1FD',
-        'privy-blueish': '#D4D9FC',
-        'privy-pink': '#FF8271',
+        'otw-white': '#FFFFFF',
+        'otw-gray': '#F5F5F5',
+        'otw-black': '#000000',
+        'otw-red': '#D53C5E',
+        'otw-yellow': '#FFCB05'
       },
     },
   },

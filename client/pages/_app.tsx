@@ -39,8 +39,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           crossOrigin=""
         />
 
-        <link rel="icon" href="/favicons/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicons/icon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicons/favicon.png" sizes="any" />
+        <link rel="icon" href="/favicons/favicon.png" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />
         <link rel="manifest" href="/favicons/manifest.json" />
 
@@ -55,7 +55,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           },
         }}
       >
-        <div id="viewport" className="flex flex-col overflow-hidden gap-8">
+        <div id="viewport" className="flex flex-col overflow-hidden gap-8 bg-otw-black text-otw-white">
           <section className="flex-1 relative overflow-hidden">
             <div className="absolute inset-0 overflow-y-auto" >
               <Component {...pageProps} />

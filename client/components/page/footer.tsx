@@ -2,8 +2,8 @@ import { useState } from "react";
 import { usePrivy } from "@privy-io/react-auth";
 
 export default function PageFooter() { 
-  const [error, setError] = useState(null);
-  const [places, setPlaces] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const [places, setPlaces] = useState<[] | null>(null);
   const {
     user
   } = usePrivy();
@@ -71,7 +71,7 @@ export default function PageFooter() {
       {/* Show List Button */}
       {!places && <button
         onClick={handleGetPlaces}
-        className="w-full p-4 bg-gray-200 hover:bg-gray-400 rounded-lg"
+        className="w-full p-4 bg-otw-red text-otw-white rounded-lg font-extrabold"
       >
         CHECK IN
       </button>}
@@ -79,14 +79,14 @@ export default function PageFooter() {
       {/* Hide List Button */}
       {places && <button
         onClick={handleCancel}
-        className="w-full p-4 bg-gray-200 hover:bg-gray-400 rounded-lg"
+        className="w-full p-4 bg-otw-red text-otw-white rounded-lg font-extrabold"
       >
         CANCEL CHECK IN
       </button>}
 
       {/* Location Response List */}
       {places && (
-        <div className="w-full h-[300px] absolute -top-4 transform -translate-y-full shadow-lg rounded-md bg-gray-200 p-4">
+        <div className="w-full h-[300px] absolute -top-4 transform -translate-y-full shadow-lg rounded-md bg-otw-yellow p-4">
           <div className="w-full h-full overflow-y-scroll">
             {/* Render location, error, or API response */}
               <div className="flex flex-col">

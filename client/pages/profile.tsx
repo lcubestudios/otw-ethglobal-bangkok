@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { usePrivy } from "@privy-io/react-auth";
@@ -9,24 +11,14 @@ import Link from "next/link";
 const APIURL = process.env.NEXT_PUBLIC_LOG_QUERY_URL
 
 const query = `
-  query GetLocationRecords($user: String!) {
+  query {
     locationRecordeds(
-      where: { user: $user },
       orderBy: timestamp,
       orderDirection: desc
     ) {
       id,
-      user,
-      latitude,
-      longitude,
       timestamp,
-      placeName,
-      country,
-      city,
-      zipCode,
-      blockNumber,
-      blockTimestamp,
-      transactionHash
+      placeName
     }
   }
 `;
@@ -50,14 +42,11 @@ export default function ProfilePage() {
   } = usePrivy();
 
   useEffect(() => {
-    if (user?.wallet?.address) fetchData()
-    setData(null);
-    setLoading(false);
-    console.log('location', navigator.geolocation)
-  }, [])
+    fetchData()
+  })
 
   async function fetchData() {
-    const variables = { user: user?.wallet?.address };
+    const variables = {};
 
     try {
       const response = await client.query(query, variables).toPromise();
@@ -65,9 +54,7 @@ export default function ProfilePage() {
         throw new Error(response.error.message);
       }
 
-      if (response.data.locationRecordeds && response.data.locationRecordeds.length > 0) setData(response.data.locationRecordeds);
-      else setData(null);
-      
+      setData(response.data.locationRecordeds);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -106,25 +93,26 @@ export default function ProfilePage() {
 
       <main className="flex flex-col gap-4">
         <header className="flex flex-col gap-2">
-          <div className="flex flex-row justify-between items-center">
-            <div className="flex-1">
+          <div className="flex flex-row justify-between items-start">
+            <div className="flex-1 flex flex-row gap-4">
+              <img src="/images/logo.png" className="w-[60px]" />
               <h1 className="m-0">Profile</h1>
             </div>
             <button
               onClick={logout}
-              className="text-xs p-2 bg-gray-200 hover:bg-gray-400 rounded-lg"
+              className="text-xs p-2 bg-otw-yellow text-otw-white rounded-lg mt-2"
             >
               LOGOUT
             </button>
           </div>
           <div>Explore a complete list of your travel adventures.</div>
         </header>
-        <section>
+        <section className="p-4 bg-otw-gray text-otw-black rounded-md">
           <div>
             {loading && <p>Loading...</p>}
             {error && <p>Error: {error}</p>}
             {!loading && !error && data && (
-              <ul className="flex flex-col gap-2 text-sm ">
+              <ul className="flex flex-col gap-2 text-sm">
                 {data.map((record) => (
                   <li 
                     key={record.id}
@@ -136,7 +124,6 @@ export default function ProfilePage() {
                 ))}
               </ul>
             )}
-            {data}
             {!loading && !error && !data && (
               <p>No records yet, click "CHECK IN" button to start saving your memories!</p>
             )}

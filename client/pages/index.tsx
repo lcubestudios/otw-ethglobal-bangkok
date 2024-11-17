@@ -43,12 +43,15 @@ export default function LoginPage() {
       </Head>
 
       <main className="w-full h-full flex justify-center items-center">
-        <button
-          className="w-full p-4 bg-gray-200 hover:bg-gray-400 rounded-lg"
-          onClick={login}
-        >
-         LOG IN
-        </button>
+        <div className="flex flex-col items-center gap-12">
+          <img src="/images/logo.png" className="w-[200px]" />
+          <button
+            className="w-full p-4 bg-otw-red text-otw-white rounded-lg font-extrabold"
+            onClick={login}
+          >
+          LOG IN
+          </button>
+        </div>
       </main>
     </>
   );
